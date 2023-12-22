@@ -12,30 +12,48 @@ test: yes
 
 This example deploys a sample application composed of four separate microservices used
 to demonstrate various Istio features.
+此示例部署了一个由四个独立的微服务组成的示例应用程序，用于演示各种 Istio 功能。
 
 {{< tip >}}
 If you installed Istio using the [Getting Started](/docs/setup/getting-started/)
 instructions, you already have Bookinfo installed and you can skip most of these steps
 and go directly to [Define the service versions](/docs/examples/bookinfo/#define-the-service-versions).
+如果您使用入门说明安装了 Istio，则您已经安装了 Bookinfo，并且可以跳过大部分步骤并直接转到定义服务版本。
 {{< /tip >}}
 
 The application displays information about a
 book, similar to a single catalog entry of an online book store. Displayed
 on the page is a description of the book, book details (ISBN, number of
 pages, and so on), and a few book reviews.
+该应用程序显示有关书籍的信息，类似于在线书店的单个目录条目。
+页面上显示的是书籍的描述、书籍详细信息（ISBN、页数等）以及一些书评。
 
 The Bookinfo application is broken into four separate microservices:
+Bookinfo 应用程序分为四个独立的微服务：
 
 * `productpage`. The `productpage` microservice calls the `details` and `reviews` microservices to populate the page.
+  产品页面微服务调用详细信息和评论微服务来填充页面。
+
 * `details`. The `details` microservice contains book information.
+  详细信息微服务包含书籍信息。
+
 * `reviews`. The `reviews` microservice contains book reviews. It also calls the `ratings` microservice.
+  评论微服务包含书评。 它还调用评级微服务。
+
 * `ratings`. The `ratings` microservice contains book ranking information that accompanies a book review.
+  评级微服务包含书评附带的书籍排名信息。
 
 There are 3 versions of the `reviews` microservice:
+评论微服务有 3 个版本：
 
 * Version v1 doesn't call the `ratings` service.
+  版本 v1 不调用评级服务。
+
 * Version v2 calls the `ratings` service, and displays each rating as 1 to 5 black stars.
+  v2 版本调用评级服务，并将每个评级显示为 1 到 5 颗黑星。
+
 * Version v3 calls the `ratings` service, and displays each rating as 1 to 5 red stars.
+  v3 版本调用评级服务，并将每个评级显示为 1 到 5 颗红星。
 
 The end-to-end architecture of the application is shown below.
 
@@ -45,11 +63,14 @@ This application is polyglot, i.e., the microservices are written in different l
 It’s worth noting that these services have no dependencies on Istio, but make an interesting
 service mesh example, particularly because of the multitude of services, languages and versions
 for the `reviews` service.
+该应用程序是多语言的，即微服务是用不同的语言编写的。
+值得注意的是，这些服务不依赖于 Istio，但却是一个有趣的服务网格示例，特别是因为评论服务有多种服务、语言和版本。
 
 ## Before you begin
 
 If you haven't already done so, setup Istio by following the instructions
 in the [installation guide](/docs/setup/).
+如果您还没有这样做，请按照安装指南中的说明设置 Istio。
 
 {{< boilerplate gateway-api-support >}}
 
@@ -59,6 +80,8 @@ To run the sample with Istio requires no changes to the
 application itself. Instead, you simply need to configure and run the services in an
 Istio-enabled environment, with Envoy sidecars injected along side each service.
 The resulting deployment will look like this:
+要使用 Istio 运行示例，不需要对应用程序本身进行任何更改。
+相反，您只需在支持 Istio 的环境中配置和运行服务，并在每个服务旁边注入 Envoy sidecar。 最终的部署将如下所示：
 
 {{< image width="80%" link="./withistio.svg" caption="Bookinfo Application" >}}
 
@@ -66,6 +89,8 @@ All of the microservices will be packaged with an Envoy sidecar that intercepts 
 and outgoing calls for the services, providing the hooks needed to externally control,
 via the Istio control plane, routing, telemetry collection, and policy enforcement
 for the application as a whole.
+所有微服务都将与 Envoy sidecar 打包在一起，该 sidecar 拦截服务的传入和传出调用，通过 Istio 控制平面、路由、遥测收集和整个应用程序的策略实施提供外部控制所需的挂钩。
+
 
 ### Start the application services
 

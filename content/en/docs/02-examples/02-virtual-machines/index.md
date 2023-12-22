@@ -18,6 +18,8 @@ test: yes
 This example deploys the Bookinfo application across Kubernetes with one
 service running on a virtual machine (VM), and illustrates how to control
 this infrastructure as a single mesh.
+此示例跨 Kubernetes 部署 Bookinfo 应用程序，并在虚拟机 (VM) 上运行一项服务，
+并说明如何将此基础设施作为单个网格进行控制。
 
 ## Overview
 
